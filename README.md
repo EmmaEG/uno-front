@@ -9,6 +9,6 @@ Este proyecto universitario para consumir un API REST que permite realizar opera
 
 ## Inicialización
 
-Para ejecutar el servidor en desarrollo:
-1. Ejecuta el servidor con `yarn dev`.
+Para ejecutar el proyecto en desarrollo:
+1. Ejecuta el proyecto con `yarn dev`.
 
