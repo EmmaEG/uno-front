@@ -4,7 +4,7 @@ import { IVehicleFilterSliceState } from "../redux/VehicleSlice/VehicleFilterSli
 
 export class VehicleService {
   static findAll = async (): Promise<Vehicle[]> => {
-    const resp = await AxiosApp.get<Vehicle[]>(`vehicle/`);
+    const resp = await AxiosApp.get<Vehicle[]>(`/taller/vehicle`);
     const { data } = resp;
     let vehicles: Vehicle[] = [];
     data.forEach((e) => {
@@ -14,7 +14,7 @@ export class VehicleService {
   };
 
   static find = async (vehicleId: string): Promise<Vehicle> => {
-    const resp = await AxiosApp.get<Vehicle>(`vehicle/${vehicleId}`);
+    const resp = await AxiosApp.get<Vehicle>(`/taller/vehicle/${vehicleId}`);
     const { data } = resp;
     return data;
   };
@@ -29,13 +29,13 @@ export class VehicleService {
       servicio: vehicle.servicio,
       estado: vehicle.estado,
     };
-    const resp = await AxiosApp.post<Vehicle>(`vehicle/`, body);
+    const resp = await AxiosApp.post<Vehicle>(`/taller/vehicle/`, body);
     const { data } = resp;
     return data;
   };
 
   static delete = async (vehicleId: string): Promise<number> => {
-    const resp = await AxiosApp.delete<number>(`vehicle/${vehicleId}`);
+    const resp = await AxiosApp.delete<number>(`/taller/vehicle/${vehicleId}`);
     const { status } = resp;
     return status;
   };
@@ -53,7 +53,7 @@ export class VehicleService {
       nMotor: vehicle.nMotor,
       nChasis: vehicle.nChasis,
     };
-    const resp = await AxiosApp.put<Vehicle>(`vehicle/${vehicleId}`, body);
+    const resp = await AxiosApp.put<Vehicle>(`/taller/vehicle/${vehicleId}`, body);
     const { data } = resp;
     return data;
   };
