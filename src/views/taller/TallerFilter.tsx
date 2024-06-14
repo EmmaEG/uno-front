@@ -103,7 +103,12 @@ export const TallerFilter = () => {
           label="Kilometraje"
           variant="outlined"
           value={filterState.kilometraje}
-          onChange={(e) => dispatch(setKm(e.target.value))}
+          onChange={(e) => {
+            const input = Number(e.target.value);
+            if (!isNaN(input)) {
+              dispatch(setKm(input.toString()));
+            }
+          }}
           sx={{ background: "#ffffff", borderRadius: 1 }}
         />
         <div style={{ width: 15 }} />
