@@ -6,12 +6,8 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch, UnknownAction } from "@reduxjs/toolkit";
-import { IApplicationState } from "../../redux/store/Store";
 import {
   clearFilterState,
-  IVehicleFilterSliceState,
   setChasis,
   setEstado,
   setKm,
@@ -24,14 +20,12 @@ import {
   getAll,
   saveVehicle,
 } from "../../redux/VehicleSlice/VehicleThunksActions";
+import { useAppDispatch, useAppSelector } from "../../redux/store/Store";
 
 export const TallerFilter = () => {
-  const dispatch =
-    useDispatch<ThunkDispatch<IApplicationState, null, UnknownAction>>();
+  const dispatch = useAppDispatch();
 
-  const filterState = useSelector<IApplicationState, IVehicleFilterSliceState>(
-    (state) => state.vehicleFilterState
-  );
+  const filterState = useAppSelector((state) => state.vehicleFilterState);
 
   const MenuProps = {
     PaperProps: {

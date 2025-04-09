@@ -22,24 +22,17 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useDispatch, useSelector } from "react-redux";
 import {
   deleteVehicle,
   getAll,
   updateVehicle,
 } from "../../redux/VehicleSlice/VehicleThunksActions";
-import { ThunkDispatch, UnknownAction } from "@reduxjs/toolkit";
-import { IApplicationState } from "../../redux/store/Store";
-import { IVehicleSliceState } from "../../redux/VehicleSlice/VehicleSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/store/Store";
 import { Vehicle } from "../../models/Vehicle";
 
 export const TallerTable = () => {
-  const dispatch =
-    useDispatch<ThunkDispatch<IApplicationState, null, UnknownAction>>();
-
-  const vehicleState = useSelector<IApplicationState, IVehicleSliceState>(
-    (state) => state.vehicleState
-  );
+  const dispatch = useAppDispatch()
+  const vehicleState = useAppSelector((state) => state.vehicleState);
 
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);

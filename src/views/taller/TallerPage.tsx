@@ -1,14 +1,10 @@
 import { CircularProgress } from "@mui/material";
 import { TallerFilter } from "./TallerFilter";
 import { TallerTable } from "./TallerTable";
-import { useSelector } from "react-redux";
-import { IApplicationState } from "../../redux/store/Store";
-import { IVehicleSliceState } from "../../redux/VehicleSlice/VehicleSlice";
+import { useAppSelector } from "../../redux/store/Store";
 
 export const TallerPage = () => {
-  const vechicleState = useSelector<IApplicationState, IVehicleSliceState>(
-    (state) => state.vehicleState
-  );
+  const vechicleState = useAppSelector((state) => state.vehicleState);
 
   return (
     <div
@@ -16,7 +12,8 @@ export const TallerPage = () => {
         display: "flex",
         flexDirection: "column",
         position: "relative",
-        height: 'calc(100vh - 15px)'
+        height: "calc(100vh - 15px)",
+        width: "100%",
       }}
     >
       {vechicleState.loading && (
@@ -25,7 +22,6 @@ export const TallerPage = () => {
             position: "absolute",
             zIndex: 9999,
             height: "100%",
-            width: "100%",
           }}
         >
           <div
@@ -39,9 +35,7 @@ export const TallerPage = () => {
           </div>
         </div>
       )}
-      <h1 style={{ color: "#000000", fontWeight: "bold" }}>
-        Servicio Post Venta
-      </h1>
+      <div style={{ height: 30 }} />
       <TallerFilter />
       <div style={{ height: 30 }} />
       <TallerTable />
