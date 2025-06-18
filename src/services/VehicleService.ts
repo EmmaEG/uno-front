@@ -44,16 +44,7 @@ export class VehicleService {
     vehicle: Vehicle,
     vehicleId: string
   ): Promise<Vehicle> => {
-    const body = {
-      marca: vehicle.marca,
-      servicio: vehicle.servicio,
-      estado: vehicle.estado,
-      patente: vehicle.patente,
-      km: vehicle.kilometraje,
-      nMotor: vehicle.nMotor,
-      nChasis: vehicle.nChasis,
-    };
-    const resp = await AxiosApp.put<Vehicle>(`/taller/vehicle/${vehicleId}`, body);
+    const resp = await AxiosApp.put<Vehicle>(`/taller/vehicle/${vehicleId}`, vehicle);
     const { data } = resp;
     return data;
   };

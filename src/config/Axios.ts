@@ -1,4 +1,5 @@
 import axios, * as Axios from "axios";
+import { store } from "../redux/store/Store"; 
 
 export const AxiosApp = axios.create({
   baseURL: "https://uno-api-psi.vercel.app/",
@@ -6,9 +7,6 @@ export const AxiosApp = axios.create({
 
 const whithoutAuth = ["/auth/register", "/auth/login"];
 
-const getToken = (): string | null => {
-  return localStorage.getItem("token");
-};
 
 AxiosApp.interceptors.request.use(
   (config: Axios.InternalAxiosRequestConfig) => {
@@ -19,7 +17,10 @@ AxiosApp.interceptors.request.use(
     );
 
     if (!includeEndpoint) {
-      config.headers["x-token"] = getToken();
+      const state = store.getState();
+      const token = state.userState.user?.token;
+
+      config.headers["x-token"] = token;
     }
 
     return config;

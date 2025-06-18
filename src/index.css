@@ -2,7 +2,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: #efefef;
   height: 100vh;
-  padding-inline: 30px;
+  padding: 30px;
   overflow: hidden;
 }
 

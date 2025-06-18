@@ -87,10 +87,15 @@ export const deleteVehicle = (vehicleId: string) => {
           ? "Se ha dado de baja el vehiclo"
           : "El vehículo no puede darse de baja";
       dispatch(setMessage(message));
-    } catch (error) {
+    } catch (error: any) {
       const { data } = (error as AxiosError<IError>).response!;
-      dispatch(setShow(true));
-      dispatch(setMessage(data.msg));
+
+      if (error.response.status === 403) {
+        dispatch(setMessage(`${data.msg}`));
+      } else {
+        dispatch(setShow(true));
+        dispatch(setMessage(data.msg));
+      }
     } finally {
       dispatch(setLoading(false));
     }

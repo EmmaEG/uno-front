@@ -24,8 +24,9 @@ export const CustomError: React.FC<CustomErrorProps> = (props) => {
     >
       <DialogTitle
         style={{
-          color: "#7e7a7a",
+          color: "#000000",
           fontWeight: 600,
+          backgroundColor: '#1976d2'
         }}
       >
         Informe de Error
@@ -62,7 +63,6 @@ export const CustomError: React.FC<CustomErrorProps> = (props) => {
         <div style={{ height: "15px" }} />
         <TextField
           InputProps={{ disableUnderline: true }}
-          // className={classes.errorTextfield}
           value={descripcion}
           multiline
           autoFocus

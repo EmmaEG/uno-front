@@ -5,22 +5,11 @@ import { ErrorSlice } from '../ErrorSlice/ErrorSlice';
 import { UserSlice } from '../userSlice/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-import storage from 'redux-persist/lib/storage';
-import { persistReducer, persistStore } from 'redux-persist';
-
-const userPersistConfig = {
-  key: 'userState',
-  storage,
-  whitelist: ['user'],
-};
-
-const persistedUserReducer = persistReducer(userPersistConfig, UserSlice.reducer);
-
 const rootReducer = {
   vehicleFilterState: VehicleFilterSlice.reducer,
   vehicleState: VehicleSlice.reducer,
   errorState: ErrorSlice.reducer,
-  userState: persistedUserReducer,
+  userState: UserSlice.reducer,
 };
 
 export const store = configureStore({
@@ -30,8 +19,6 @@ export const store = configureStore({
       serializableCheck: false, // necesario para redux-persist
     }),
 });
-
-export const persistor = persistStore(store);
 
 // Tipos para TypeScript
 export type RootState = ReturnType<typeof store.getState>;

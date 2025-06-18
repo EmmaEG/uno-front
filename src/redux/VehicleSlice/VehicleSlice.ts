@@ -12,7 +12,7 @@ export const initialState: IVehicleSliceState = {
   rows: [],
   row: null,
   loading: false,
-  message: ''
+  message: "",
 };
 
 export const VehicleSlice = createSlice({
@@ -37,4 +37,10 @@ export const VehicleSlice = createSlice({
   },
 });
 
-export const { setLoading, setVehicle, clearVehicleState, setMessage, setVehicles } = VehicleSlice.actions;
+export const {
+  setLoading,
+  setVehicle,
+  clearVehicleState,
+  setMessage,
+  setVehicles,
+} = VehicleSlice.actions;

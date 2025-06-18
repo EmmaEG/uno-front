@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser } from "../../models/User";
+import { User } from "../../models/User";
 
 export interface IUserState {
   readonly loading: boolean;
-  readonly user: IUser | null;
+  readonly user: User | null;
   readonly message: string;
   readonly registerStatus: number | null;
 }
@@ -25,15 +25,19 @@ export const UserSlice = createSlice({
     setRegisterStatus: (state, action: PayloadAction<number>) => {
       state.registerStatus = action.payload;
     },
-    setUser: (state, action: PayloadAction<IUser>) => {
+    setUser: (state, action: PayloadAction<User>) => {
       state.message = "";
       state.user = action.payload;
+    },
+    setNewToken(state, action: PayloadAction<string>) {
+      if (state.user) {
+        state.user.token = action.payload;
+      }
     },
     setMessageUser: (state, action: PayloadAction<string>) => {
       state.message = action.payload;
     },
     clearUserState: () => {
-      localStorage.removeItem("token");
       return initialState;
     },
   },
@@ -42,6 +46,7 @@ export const UserSlice = createSlice({
 export const {
   setLoadingUser,
   setUser,
+  setNewToken,
   setMessageUser,
   clearUserState,
   setRegisterStatus,

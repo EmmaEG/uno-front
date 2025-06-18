@@ -21,6 +21,7 @@ import {
   saveVehicle,
 } from "../../redux/VehicleSlice/VehicleThunksActions";
 import { useAppDispatch, useAppSelector } from "../../redux/store/Store";
+import { renewToken } from "../../redux/userSlice/UserThunksActions";
 
 export const TallerFilter = () => {
   const dispatch = useAppDispatch();
@@ -183,6 +184,7 @@ export const TallerFilter = () => {
           color="info"
           onClick={() => {
             dispatch(clearFilterState());
+            dispatch(renewToken());
           }}
           disabled={
             filterState.marca?.length === 0 &&
@@ -211,6 +213,7 @@ export const TallerFilter = () => {
           }
           onClick={async () => {
             await dispatch(saveVehicle(filterState));
+            dispatch(renewToken());
             dispatch(clearFilterState());
             dispatch(getAll());
           }}

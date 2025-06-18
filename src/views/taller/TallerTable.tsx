@@ -31,7 +31,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/store/Store";
 import { Vehicle } from "../../models/Vehicle";
 
 export const TallerTable = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const vehicleState = useAppSelector((state) => state.vehicleState);
 
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -43,7 +43,7 @@ export const TallerTable = () => {
     dispatch(getAll());
   }, [dispatch]);
 
-  const handleDelete = async () => {
+  const deleteAction = async () => {
     if (selected) {
       await dispatch(deleteVehicle(selected.id));
       dispatch(getAll());
@@ -52,7 +52,7 @@ export const TallerTable = () => {
     }
   };
 
-  const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeTextFielf = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name as keyof Vehicle;
     const value = e.target.value;
 
@@ -65,7 +65,7 @@ export const TallerTable = () => {
     }
   };
 
-  const handleSelectChange = (e: SelectChangeEvent<string>) => {
+  const changeSelected = (e: SelectChangeEvent<string>) => {
     const name = e.target.name as keyof Vehicle;
     const value = e.target.value;
 
@@ -78,7 +78,7 @@ export const TallerTable = () => {
     }
   };
 
-  const handleEdit = async () => {
+  const changeEdit = async () => {
     if (selected) {
       await dispatch(updateVehicle(selected, selected.id));
       dispatch(getAll());
@@ -88,7 +88,7 @@ export const TallerTable = () => {
     }
   };
 
-  const handleEditOpen = (row: Vehicle) => {
+  const changeEditOpen = (row: Vehicle) => {
     setSelected(row);
     setOpenEdit(true);
     setChanged(false);
@@ -192,7 +192,7 @@ export const TallerTable = () => {
                   }}
                   align="left"
                   onClick={() => {
-                    handleEditOpen(row);
+                    changeEditOpen(row);
                   }}
                 >
                   <EditIcon />
@@ -231,7 +231,7 @@ export const TallerTable = () => {
             </Button>
             <div style={{ width: 5 }} />
             <Button
-              onClick={handleDelete}
+              onClick={deleteAction}
               style={{ fontSize: 12 }}
               variant="outlined"
               color="primary"
@@ -261,7 +261,7 @@ export const TallerTable = () => {
                 name="marca"
                 value={selected.marca}
                 label="Marca"
-                onChange={handleSelectChange}
+                onChange={changeSelected}
                 MenuProps={MenuProps}
               >
                 <MenuItem value={"HONDA"}>HONDA</MenuItem>
@@ -291,7 +291,7 @@ export const TallerTable = () => {
               name="patente"
               label="Patente"
               value={selected.patente}
-              onChange={handleTextFieldChange}
+              onChange={changeTextFielf}
               fullWidth
             />
             <TextField
@@ -299,7 +299,7 @@ export const TallerTable = () => {
               name="kilometraje"
               label="Kilometraje"
               value={selected.kilometraje}
-              onChange={handleTextFieldChange}
+              onChange={changeTextFielf}
               fullWidth
             />
             <TextField
@@ -307,7 +307,7 @@ export const TallerTable = () => {
               name="nMotor"
               label="Nº Motor"
               value={selected.nMotor}
-              onChange={handleTextFieldChange}
+              onChange={changeTextFielf}
               fullWidth
             />
             <TextField
@@ -315,7 +315,7 @@ export const TallerTable = () => {
               name="nChasis"
               label="Nº Chasis"
               value={selected.nChasis}
-              onChange={handleTextFieldChange}
+              onChange={changeTextFielf}
               fullWidth
             />
 
@@ -330,7 +330,7 @@ export const TallerTable = () => {
                 name="servicio"
                 value={selected.servicio}
                 label="Servicio"
-                onChange={handleSelectChange}
+                onChange={changeSelected}
                 MenuProps={MenuProps}
               >
                 <MenuItem value={"1 SERVICE"}>1 SERVICE</MenuItem>
@@ -350,7 +350,7 @@ export const TallerTable = () => {
                 name="estado"
                 value={selected.estado}
                 label="Estado"
-                onChange={handleSelectChange}
+                onChange={changeSelected}
                 MenuProps={MenuProps}
               >
                 <MenuItem value={"INGRESADO"}>INGRESADO</MenuItem>
@@ -374,7 +374,7 @@ export const TallerTable = () => {
             </Button>
             <div style={{ width: 5 }} />
             <Button
-              onClick={handleEdit}
+              onClick={changeEdit}
               style={{ fontSize: 12 }}
               variant="outlined"
               color="primary"

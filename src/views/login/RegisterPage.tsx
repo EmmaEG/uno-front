@@ -9,18 +9,19 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../redux/store/Store";
-import { loginUser } from "../../redux/userSlice/UserThunksActions";
+import { createUser } from "../../redux/userSlice/UserThunksActions";
 import { useNavigate } from "react-router-dom";
-import MessageDialog from "../../components/MessageDialog";
-import { setMessageUser } from "../../redux/userSlice/UserSlice";
+import { setRegisterStatus } from "../../redux/userSlice/UserSlice";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const userState = useAppSelector((state) => state.userState);
   const navigate = useNavigate();
 
+  const [name, setName] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
   const [emailError, setEmailError] = React.useState<boolean>(false);
+  const [nameError, setNameError] = React.useState<boolean>(false);
   const [password, setPassword] = React.useState<string>("");
 
   const validateEmail = (value: string) => {
@@ -29,10 +30,11 @@ const LoginPage = () => {
   };
 
   React.useEffect(() => {
-    if (userState.user) {
-      navigate("/", { replace: true });
+    if (userState.registerStatus === 201) {
+      dispatch(setRegisterStatus(0));
+      navigate(-1);
     }
-  }, [userState.user]);
+  }, [userState.registerStatus]);
 
   return (
     <Container
@@ -40,7 +42,7 @@ const LoginPage = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        marginTop: 5,
         alignItems: "center",
         height: "100vh",
       }}
@@ -65,29 +67,37 @@ const LoginPage = () => {
           </div>
         </div>
       )}
-      {userState.message && (
-        <MessageDialog
-          title="Informe Inicio de sesión"
-          message={userState.message}
-          onClose={() => {
-            dispatch(setMessageUser(""));
-          }}
-        />
-      )}
-      <Typography variant="h2" fontWeight="bold" gutterBottom>
-        Taller UNO
-      </Typography>
       <Paper
         elevation={3}
         sx={{ padding: 10, width: "100%", textAlign: "center", maxWidth: 400 }}
       >
         <Typography variant="h5" fontWeight="bold" gutterBottom>
-          Iniciar Sesión
+          Crear Nuevo Usuario
         </Typography>
         <Box
           component="form"
           sx={{ display: "flex", flexDirection: "column", gap: 3 }}
         >
+          <TextField
+            label="Name"
+            variant="outlined"
+            placeholder="Juan Perez"
+            required
+            fullWidth
+            value={name}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              const value = e.target.value;
+              setName(value);
+              setNameError(value.length < 3);
+            }}
+            type="text"
+            error={nameError}
+            helperText={
+              nameError
+                ? "Por favor, ingresá nombre y apellido, debe tener mínimo 3 caracteres."
+                : ""
+            }
+          />
           <TextField
             label="Email"
             variant="outlined"
@@ -123,9 +133,11 @@ const LoginPage = () => {
               if (
                 e.key === "Enter" &&
                 email.length !== 0 &&
-                password.length !== 0
+                password.length !== 0 &&
+                name.length < 3 &&
+                !emailError
               ) {
-                dispatch(loginUser(email, password));
+                dispatch(createUser(name, email, password));
               }
             }}
           />
@@ -134,12 +146,17 @@ const LoginPage = () => {
             color="primary"
             fullWidth
             style={{ height: 45 }}
-            disabled={email.length === 0 || password.length === 0}
+            disabled={
+              email.length === 0 ||
+              password.length < 6 ||
+              name.length < 3 ||
+              emailError
+            }
             onClick={() => {
-              dispatch(loginUser(email, password));
+              dispatch(createUser(name, email, password));
             }}
           >
-            Ingresar
+            Registrar
           </Button>
         </Box>
       </Paper>
@@ -147,4 +164,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
